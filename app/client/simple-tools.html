@@ -8,12 +8,16 @@
 			<h1>Todo List ({{incompleteCount}})</h1>
 
 			<label class="hide-completed">
-				<input type="checkbox" checked="{{hideCompleted}}" />
-	  Hide Completed Tasks
+				<input type="checkbox" checked="{{hideCompleted}}" />Hide Completed Tasks
 			</label>
-
+			<label class="hide-public">
+				<input type="radio" id="privFilter" name="filter" onchange="{{hidePublic}}" class="filterSelected"  /> Hide Public
+			</label>
+			<label class="hide-private">
+				<input type="radio" id="pubFilter" name="filter" onchange="{{hidePrivate}}" class="filterSelected"  /> Hide Private
+			</label>
 			<button class="count-clicked">Count Total Tasks</button>
-
+			
 	  {{> loginButtons}}
 	  {{#if currentUser}} 
 			<form class="new-task">
@@ -46,6 +50,6 @@
 	{{/if}}
 
 		<span class="text">
-			<strong>{{username}}</strong> - {{text}}</span>
+		<strong>{{username}}</strong> - {{text}}</span>
 	</li>
 </template>

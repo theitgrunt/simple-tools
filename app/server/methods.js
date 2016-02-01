@@ -2,6 +2,7 @@
 Meteor.methods({
 
 	getTaskCount : function () {
+		//is it best practice to use const or var here?
 		const count = Tasks.find({}, {
 				sort : {
 					createdAt : -1

@@ -1,17 +1,56 @@
 Tasks = new Mongo.Collection("tasks");
 
-
-
 if (Meteor.isClient) { // This code only runs on the client
 
 	Meteor.subscribe("tasks");
+	Meteor.subscribe("filteredTasks");
 
+	getPublicPrivateFilter = new function () {
+			var test = null; 
+			var hidePub = Session.get("hidePublic");
+			var hidePriv = Session.get("hidePrivate");
+			if(hidePub ==undefined && hidePriv == undefined) {
+				test = ''; 
+			} else {
+				if (hidePriv=== true) {
+					test = hidePriv;
+				} else {
+					test = !hidePub;
+				}
+			}
+			
+			return test;
+	};
+	
 	Template.body.helpers({
+		
 		tasks : function () {
+			var test = null; 
+			var hidePub = Session.get("hidePublic");
+			var hidePriv = Session.get("hidePrivate");
+			if(hidePub ==undefined && hidePriv == undefined) {
+				test = ''; 
+			} else {
+				if (hidePriv=== true) {
+					test = hidePriv;
+				} else {
+					test = !hidePub;
+				}
+			}
+			
+			//  Where do I put helper/utility methods so I don't repeat code?
+			//  Is it possible to access methods in other objects/scopes?
+			//  I don't want to repeat the code above for each find() call see incompleteCount()
+			
+			//test = getPublicPrivateFilter();	
+				
 			if (Session.get("hideCompleted")) {
 				return Tasks.find({
 					checked : {
-						$ne : true
+						$ne : Session.get("hideCompleted")
+					},
+					private : {
+						$ne : test
 					}
 				}, {
 					sort : {
@@ -19,7 +58,11 @@ if (Meteor.isClient) { // This code only runs on the client
 					}
 				});
 			} else {
-				return Tasks.find({}, {
+				return Tasks.find({
+					private : {
+						$ne : test
+					}
+				}, {
 					sort : {
 						createdAt : -1
 					}
@@ -30,7 +73,23 @@ if (Meteor.isClient) { // This code only runs on the client
 			return Session.get("hideCompleted");
 		},
 		incompleteCount : function () {
+			var test = null; 
+			var hidePub = Session.get("hidePublic");
+			var hidePriv = Session.get("hidePrivate");
+			if(hidePub ==undefined && hidePriv == undefined) {
+				test = ''; 
+			} else {
+				if (hidePriv=== true) {
+					test = hidePriv;
+				} else {
+					test = !hidePub;
+				}
+			}	
+			
 			return Tasks.find({
+				private : {
+						$ne : test
+				},
 				checked : {
 					$ne : true
 				}
@@ -48,20 +107,30 @@ if (Meteor.isClient) { // This code only runs on the client
 
 			event.target.text.value = "";
 		},
-		"change .hide-completed input" : function (event) {
-			Session.set("hideCompleted", event.target.checked);
-		}
-		,
+		"click .hide-completed" : function (event, target) {
+				Session.set("hideCompleted", event.target.checked);
+		},
+		"click .hide-public" : function (event, target) {
+			Session.set("hidePublic", event.target.checked);
+			Session.set("hidePrivate", false);			
+		},
+		"click .hide-private" : function (event, target) {
+			Session.set("hidePrivate", event.target.checked);
+			Session.set("hidePublic", false);
+		},
 		"click .count-clicked" :  function (event) {
 			Meteor.call('getTaskCount', {}, (err, res) => {
-			if(err)	 {
-				alert(err);
-			} else alert("Total Tasks: "+ res);
-		});
+				if(err)	 {
+					alert(err);
+				} else {
+					alert("Total Tasks: "+ res);
+				}
+			});
 		}
 	});
 
 	Template.task.helpers({
+		
 		isOwner : function () {
 			return this.owner === Meteor.userId();
 		}
