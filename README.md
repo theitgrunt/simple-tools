@@ -1,7 +1,17 @@
 "# simple-tools" 
 
 //*****Change Log *****//
-updated 1-31-2016 
+
+//**********************//
+updated 2-1-2016
+
+*implemented public/private filtering via radio buttons
+
+TODO:
+Limit the amont of tasks to 10 and create button "Show More"
+
+//**********************//
+1-31-2016 
 
 *  Updated Directory Structure
 *  Added Button to count total tasks
