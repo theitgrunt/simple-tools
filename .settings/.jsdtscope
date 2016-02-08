@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="**/bower_components/*|programs/web.browser/packages/|**/node_modules/*|programs/server/|programs/web.browser/app/app/client/|programs/server/packages/|**/*.min.js|programs/server/app/app/server/" kind="src" path=".meteor/local/build"/>
+	<classpathentry excluding="app/app/server/|**/bower_components/*|**/node_modules/*|packages/|**/*.min.js" kind="src" path=".meteor/local/build/programs/server"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path=".meteor/local/build/programs/server/app/app/server"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path=".meteor/local/build/programs/server/packages"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path=".meteor/local/build/programs/web.browser/app/app/client"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path=".meteor/local/build/programs/web.browser/packages"/>
+	<classpathentry excluding="os/|**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path=".meteor/local/isopacks/npm-container"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path=".meteor/local/isopacks/npm-container/os"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="app/client"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="app/server"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="packages/npm-container"/>
+	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path=""/>
+</classpath>

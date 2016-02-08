@@ -14,7 +14,25 @@ Meteor.methods({
 			return count;
 		}
 	},
-
+	getAllTasks : function (hideCompleted, test) {
+		var tasks = Tasks.find({
+					checked : {
+						$ne : hideCompleted
+					},
+					private : {
+						$ne : test
+					}
+				}, {
+					sort : {
+						createdAt : -1
+					}
+				});
+		if (tasks.size === -1) {
+			throw new Meteor.Error('No tasks');
+		} else {
+			return tasks;
+		}
+	},
 	addTask : function (text) {
 		if (!Meteor.userId()) {
 			throw new Meteor.Error("not-authorized");

@@ -110,6 +110,14 @@ header .hide-completed {
   margin-left: 5px;
 }
 
+.button-wrapper {
+	  text-align:center;
+  }
+  
+.show-more button {
+	margin: auto  ;
+	position: absolute;
+  }
 @media (max-width: 600px) {
   li {
     padding: 12px 15px;
@@ -123,4 +131,6 @@ header .hide-completed {
   .new-task input {
     padding-bottom: 5px;
   }
+  
+
 }

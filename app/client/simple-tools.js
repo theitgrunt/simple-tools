@@ -3,7 +3,7 @@ Tasks = new Mongo.Collection("tasks");
 if (Meteor.isClient) { // This code only runs on the client
 
 	Meteor.subscribe("tasks");
-	Meteor.subscribe("filteredTasks");
+	//Meteor.subscribe("filteredTasks");
 
 	getPublicPrivateFilter = new function () {
 			var test = null; 
@@ -28,6 +28,7 @@ if (Meteor.isClient) { // This code only runs on the client
 			var test = null; 
 			var hidePub = Session.get("hidePublic");
 			var hidePriv = Session.get("hidePrivate");
+			var incompleteCount = Session.get("IncompleteCount");
 			if(hidePub ==undefined && hidePriv == undefined) {
 				test = ''; 
 			} else {
@@ -55,7 +56,7 @@ if (Meteor.isClient) { // This code only runs on the client
 				}, {
 					sort : {
 						createdAt : -1
-					}
+					}, limit :10
 				});
 			} else {
 				return Tasks.find({
@@ -65,7 +66,8 @@ if (Meteor.isClient) { // This code only runs on the client
 				}, {
 					sort : {
 						createdAt : -1
-					}
+					}, 
+					limit:10
 				});
 			}
 		},
@@ -124,6 +126,31 @@ if (Meteor.isClient) { // This code only runs on the client
 					alert(err);
 				} else {
 					alert("Total Tasks: "+ res);
+				}
+			});
+		},
+		"click show-more"  : function(event) {
+			//again... where is it best for this common helper to reside 
+			//and how is it called from the other blocks of code?
+			var test = null; 
+			var hidePub = Session.get("hidePublic");
+			var hidePriv = Session.get("hidePrivate");
+			var incompleteCount = Session.get("IncompleteCount");
+			var hideCompleted = Session.get("hideCompleted");
+			if(hidePub ==undefined && hidePriv == undefined) {
+				test = ''; 
+			} else {
+				if (hidePriv=== true) {
+					test = hidePriv;
+				} else {
+					test = !hidePub;
+				}
+			}
+			Meteor.call('getAllTasks', {hideCompleted, test}, (err, res) => {
+				if(err)	 {
+					
+				} else {
+					
 				}
 			});
 		}
